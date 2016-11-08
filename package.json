@@ -1,22 +1,28 @@
 {
   "name": "webgl-utils",
   "version": "1.0.0",
-  "description": "",
+  "description": " ",
+  "private": true,
+
   "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+
+  "devDependencies": {
+    "babel-cli": "6.18.0",
+    "babel-preset-es2015": "6.18.0",
+    "gl": "4.0.2",
+    "tape": "4.6.2"
   },
+
+  "scripts": {
+    "postinstall": "npm run build",
+    "test": "npm run build && node test.js",
+    "build": "node node_modules/.bin/babel -o bundle.js -s true --minified index.js"
+  },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/julien/webgl-utils.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/julien/webgl-utils/issues"
-  },
-  "homepage": "https://github.com/julien/webgl-utils#readme"
+
+  "license": "ISC"
 }

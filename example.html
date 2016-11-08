@@ -22,7 +22,12 @@
     }
   </script>
 
-  <script src="index.js"></script>
+
+  <script>
+   // just to avoid an error when loading the "transpiled" code directly
+    let exports = {};
+  </script>
+  <script src="bundle.js"></script>
   <script>
   window.addEventListener('load', () => {
 
