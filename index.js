@@ -14,7 +14,7 @@ function createShader(gl, type, src) {
 	throw new Error(err);
 }
 
-function createProgram(gl, vsrc, fsrc) {
+export function createProgram(gl, vsrc, fsrc) {
 	const vshader = createShader(gl, gl.VERTEX_SHADER, vsrc);
 	const fshader = createShader(gl, gl.FRAGMENT_SHADER, fsrc);
 	const program = gl.createProgram();
@@ -32,7 +32,7 @@ function createProgram(gl, vsrc, fsrc) {
 	throw new Error(err);
 }
 
-function getProgramInfo(gl, program) {
+export function getProgramInfo(gl, program) {
 	let info = {};
 
 	const attrs = gl.getProgramParameter(program, gl.ACTIVE_ATTRIBUTES);
