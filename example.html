@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head> </head>
+<body>
+  <canvas id="c" width="400" height="300"></canvas>
+
+  <script type="x-shader/x-vertex" id="vs">
+    attribute vec3 a_position;
+    uniform float u_pointSize;
+
+    void main() {
+      gl_PointSize = u_pointSize;
+
+      gl_Position = vec4(a_position, 1.);
+    }
+  </script>
+
+  <script type="x-shader/x-fragment" id="fs">
+
+    void main() {
+      gl_FragColor = vec4(1., 1., .3, 1.);
+    }
+  </script>
+
+  <script src="index.js"></script>
+  <script>
+  window.addEventListener('load', () => {
+
+    const canvas = document.getElementById('c');
+    const gl = canvas.getContext('webgl');
+    if (!gl) {
+      throw new Error('could not create WebGL context');
+    }
+    const program = createProgram(gl,
+        document.getElementById('vs').textContent,
+        document.getElementById('fs').textContent);
+
+    const programInfo = getProgramInfo(gl, program);
+
+    gl.useProgram(program);
+    gl.viewport(0, 0, gl.canvas.clientWidth, gl.canvas.clientHeight);
+    gl.clearColor(.3, .3, .9, 1);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+
+    gl.enableVertexAttribArray(programInfo.a_position);
+    gl.vertexAttribPointer(programInfo.a_position, 2, gl.FLOAT, false, 0, 0);
+
+    const positions = [
+      -0.5,  0.5,
+      -0.5, -0.5,
+      0.5,  0.5,
+      0.5, -0.5
+    ];
+    const positionData = new Float32Array(positions);
+    gl.bufferData(gl.ARRAY_BUFFER, positionData, gl.STATIC_DRAW);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, positionData.length / 2);
+
+  });
+  </script>
+</body>
+</html>
